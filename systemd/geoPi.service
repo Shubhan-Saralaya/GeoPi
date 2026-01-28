@@ -1,0 +1,15 @@
+[Unit]
+Description=geoPi iPhone location agent (runs tunneld + auto-apply + keepalive)
+After=network.target
+
+[Service]
+Type=simple
+User=root
+EnvironmentFile=/etc/geoPi.env
+ExecStart=/usr/local/bin/geoPi_agent.sh
+Restart=always
+RestartSec=2
+TimeoutStopSec=10
+
+[Install]
+WantedBy=multi-user.target

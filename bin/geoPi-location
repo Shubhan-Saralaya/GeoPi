@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+loc="${1:-}"
+case "$loc" in
+  su|ecs|sci)
+    sudo ln -sf "/etc/geoPi/locations/${loc}.env" /etc/geoPi.env
+    echo "Switched to ${loc}. Restarting geoPi…"
+    sudo systemctl restart geoPi.service
+    ;;
+  ""|list|-l|--list)
+    echo "Available: su ecs sci"
+    echo -n "Current: "; readlink -f /etc/geoPi.env | sed 's#.*/##;s/\.env$//'
+    ;;
+  *) echo "Usage: geoPi-location {su|ecs|sci|list}"; exit 1;;
+esac
